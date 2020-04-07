@@ -20,8 +20,6 @@
 		11C1C1CD24202BDB00ACB9B8 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C1C1CB24202BDB00ACB9B8 /* Item.swift */; };
 		11C1C1D424202C0300ACB9B8 /* ParserError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C1C1CF24202C0300ACB9B8 /* ParserError.swift */; };
 		11C1C1D524202C0300ACB9B8 /* ParserError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C1C1CF24202C0300ACB9B8 /* ParserError.swift */; };
-		11C1C1D624202C0300ACB9B8 /* ItemsParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C1C1D024202C0300ACB9B8 /* ItemsParser.swift */; };
-		11C1C1D724202C0300ACB9B8 /* ItemsParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C1C1D024202C0300ACB9B8 /* ItemsParser.swift */; };
 		11C1C1D824202C0300ACB9B8 /* NetworkingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C1C1D124202C0300ACB9B8 /* NetworkingService.swift */; };
 		11C1C1D924202C0300ACB9B8 /* NetworkingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C1C1D124202C0300ACB9B8 /* NetworkingService.swift */; };
 		11C1C1DA24202C0300ACB9B8 /* ItemsNetworkingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C1C1D224202C0300ACB9B8 /* ItemsNetworkingService.swift */; };
@@ -45,7 +43,6 @@
 		11C1C1FD24202DAA00ACB9B8 /* ItemsHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C1C1F624202DAA00ACB9B8 /* ItemsHandlerTests.swift */; };
 		11C1C1FE24202DAA00ACB9B8 /* ItemsURLProtocolMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C1C1F724202DAA00ACB9B8 /* ItemsURLProtocolMock.swift */; };
 		11C1C1FF24202DAA00ACB9B8 /* ItemsNetworkingServiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C1C1F824202DAA00ACB9B8 /* ItemsNetworkingServiceTest.swift */; };
-		11C1C20024202DAA00ACB9B8 /* ItemsParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C1C1F924202DAA00ACB9B8 /* ItemsParserTests.swift */; };
 		11C1C20124202DAA00ACB9B8 /* Items.json in Resources */ = {isa = PBXBuildFile; fileRef = 11C1C1FB24202DAA00ACB9B8 /* Items.json */; };
 		11C1C20224202DAA00ACB9B8 /* InvalidItems.json in Resources */ = {isa = PBXBuildFile; fileRef = 11C1C1FC24202DAA00ACB9B8 /* InvalidItems.json */; };
 /* End PBXBuildFile section */
@@ -83,7 +80,6 @@
 		11C1C1BD24202A5F00ACB9B8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		11C1C1CB24202BDB00ACB9B8 /* Item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		11C1C1CF24202C0300ACB9B8 /* ParserError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParserError.swift; sourceTree = "<group>"; };
-		11C1C1D024202C0300ACB9B8 /* ItemsParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemsParser.swift; sourceTree = "<group>"; };
 		11C1C1D124202C0300ACB9B8 /* NetworkingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkingService.swift; sourceTree = "<group>"; };
 		11C1C1D224202C0300ACB9B8 /* ItemsNetworkingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemsNetworkingService.swift; sourceTree = "<group>"; };
 		11C1C1D324202C0300ACB9B8 /* NetworkError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
@@ -97,7 +93,6 @@
 		11C1C1F624202DAA00ACB9B8 /* ItemsHandlerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemsHandlerTests.swift; sourceTree = "<group>"; };
 		11C1C1F724202DAA00ACB9B8 /* ItemsURLProtocolMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemsURLProtocolMock.swift; sourceTree = "<group>"; };
 		11C1C1F824202DAA00ACB9B8 /* ItemsNetworkingServiceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemsNetworkingServiceTest.swift; sourceTree = "<group>"; };
-		11C1C1F924202DAA00ACB9B8 /* ItemsParserTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemsParserTests.swift; sourceTree = "<group>"; };
 		11C1C1FB24202DAA00ACB9B8 /* Items.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Items.json; sourceTree = "<group>"; };
 		11C1C1FC24202DAA00ACB9B8 /* InvalidItems.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = InvalidItems.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -167,7 +162,6 @@
 				11C1C1F624202DAA00ACB9B8 /* ItemsHandlerTests.swift */,
 				11C1C1F824202DAA00ACB9B8 /* ItemsNetworkingServiceTest.swift */,
 				115E3641243D2E72000E3855 /* NetworkRouterMocks.swift */,
-				11C1C1F924202DAA00ACB9B8 /* ItemsParserTests.swift */,
 				11C1C1F724202DAA00ACB9B8 /* ItemsURLProtocolMock.swift */,
 				11C1C1B224202A5F00ACB9B8 /* Info.plist */,
 			);
@@ -204,7 +198,6 @@
 			isa = PBXGroup;
 			children = (
 				11C1C1CF24202C0300ACB9B8 /* ParserError.swift */,
-				11C1C1D024202C0300ACB9B8 /* ItemsParser.swift */,
 				11C1C1D124202C0300ACB9B8 /* NetworkingService.swift */,
 				115E363B243D271F000E3855 /* NetworkRouter.swift */,
 				11C1C1D224202C0300ACB9B8 /* ItemsNetworkingService.swift */,
@@ -388,7 +381,6 @@
 				11C1C1DC24202C0300ACB9B8 /* NetworkError.swift in Sources */,
 				11C1C1F224202CE700ACB9B8 /* ItemsViewModel.swift in Sources */,
 				11C1C1DA24202C0300ACB9B8 /* ItemsNetworkingService.swift in Sources */,
-				11C1C1D624202C0300ACB9B8 /* ItemsParser.swift in Sources */,
 				115E363C243D271F000E3855 /* NetworkRouter.swift in Sources */,
 				115E363E243D2751000E3855 /* ItemsRouter.swift in Sources */,
 				11C1C1CC24202BDB00ACB9B8 /* Item.swift in Sources */,
@@ -405,7 +397,6 @@
 				11C1C1ED24202CE700ACB9B8 /* ItemTableViewCellViewModel.swift in Sources */,
 				11C1C1F524202CE700ACB9B8 /* ItemsViewController.swift in Sources */,
 				11C1C1FE24202DAA00ACB9B8 /* ItemsURLProtocolMock.swift in Sources */,
-				11C1C20024202DAA00ACB9B8 /* ItemsParserTests.swift in Sources */,
 				11C1C1DB24202C0300ACB9B8 /* ItemsNetworkingService.swift in Sources */,
 				11C1C1DD24202C0300ACB9B8 /* NetworkError.swift in Sources */,
 				11C1C1F124202CE700ACB9B8 /* ItemsHandler.swift in Sources */,
@@ -415,7 +406,6 @@
 				11C1C1CD24202BDB00ACB9B8 /* Item.swift in Sources */,
 				11C1C1EB24202CE700ACB9B8 /* ItemTableViewCell.swift in Sources */,
 				11C1C1D524202C0300ACB9B8 /* ParserError.swift in Sources */,
-				11C1C1D724202C0300ACB9B8 /* ItemsParser.swift in Sources */,
 				11C1C1F324202CE700ACB9B8 /* ItemsViewModel.swift in Sources */,
 				115E3640243D2861000E3855 /* NetworkRouter.swift in Sources */,
 				11C1C1FF24202DAA00ACB9B8 /* ItemsNetworkingServiceTest.swift in Sources */,

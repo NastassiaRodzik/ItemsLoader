@@ -10,7 +10,7 @@ import Foundation
 import Combine
 
 protocol ItemsViewModelDataSource {
-    init(networkingService: ItemsNetworkingClient, itemsParser: ItemsJSONParser, itemsHandler: ItemsHandlerProtocol)
+    init(networkingService: ItemsNetworkingClient, itemsHandler: ItemsHandlerProtocol)
     
     var itemsSubject: CurrentValueSubject<[ItemsGroupedList], Error> { get }
     func prepareItems()
@@ -21,19 +21,17 @@ final class ItemsViewModel: ItemsViewModelDataSource {
     let itemsSubject: CurrentValueSubject<[ItemsGroupedList], Error> = CurrentValueSubject([])
     
     private let networkingService: ItemsNetworkingClient
-    private let itemsParser: ItemsJSONParser
     private let itemsHandler: ItemsHandlerProtocol
     
     private var networkSubscriber: Cancellable?
 
-    init(networkingService: ItemsNetworkingClient, itemsParser: ItemsJSONParser, itemsHandler: ItemsHandlerProtocol){
+    init(networkingService: ItemsNetworkingClient, itemsHandler: ItemsHandlerProtocol){
         self.networkingService = networkingService
-        self.itemsParser = itemsParser
         self.itemsHandler = itemsHandler
     }
     
     convenience init() {
-        self.init(networkingService: ItemsNetworkingService(), itemsParser: ItemsJSONParser(), itemsHandler: ItemsHandler())
+        self.init(networkingService: ItemsNetworkingService(), itemsHandler: ItemsHandler())
     }
     
     func prepareItems() {
