@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		115E363C243D271F000E3855 /* NetworkRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115E363B243D271F000E3855 /* NetworkRouter.swift */; };
+		115E363E243D2751000E3855 /* ItemsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115E363D243D2751000E3855 /* ItemsRouter.swift */; };
+		115E363F243D2858000E3855 /* ItemsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115E363D243D2751000E3855 /* ItemsRouter.swift */; };
+		115E3640243D2861000E3855 /* NetworkRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115E363B243D271F000E3855 /* NetworkRouter.swift */; };
+		115E3642243D2E72000E3855 /* NetworkRouterMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115E3641243D2E72000E3855 /* NetworkRouterMocks.swift */; };
 		11C1C19C24202A5E00ACB9B8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C1C19B24202A5E00ACB9B8 /* AppDelegate.swift */; };
 		11C1C1A324202A5F00ACB9B8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 11C1C1A224202A5F00ACB9B8 /* Assets.xcassets */; };
 		11C1C1A624202A5F00ACB9B8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 11C1C1A424202A5F00ACB9B8 /* LaunchScreen.storyboard */; };
@@ -63,6 +68,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		115E363B243D271F000E3855 /* NetworkRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkRouter.swift; sourceTree = "<group>"; };
+		115E363D243D2751000E3855 /* ItemsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsRouter.swift; sourceTree = "<group>"; };
+		115E3641243D2E72000E3855 /* NetworkRouterMocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkRouterMocks.swift; sourceTree = "<group>"; };
 		11C1C19824202A5E00ACB9B8 /* ItemsLoader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ItemsLoader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		11C1C19B24202A5E00ACB9B8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		11C1C1A224202A5F00ACB9B8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -158,6 +166,7 @@
 				11C1C1FA24202DAA00ACB9B8 /* Resources */,
 				11C1C1F624202DAA00ACB9B8 /* ItemsHandlerTests.swift */,
 				11C1C1F824202DAA00ACB9B8 /* ItemsNetworkingServiceTest.swift */,
+				115E3641243D2E72000E3855 /* NetworkRouterMocks.swift */,
 				11C1C1F924202DAA00ACB9B8 /* ItemsParserTests.swift */,
 				11C1C1F724202DAA00ACB9B8 /* ItemsURLProtocolMock.swift */,
 				11C1C1B224202A5F00ACB9B8 /* Info.plist */,
@@ -197,7 +206,9 @@
 				11C1C1CF24202C0300ACB9B8 /* ParserError.swift */,
 				11C1C1D024202C0300ACB9B8 /* ItemsParser.swift */,
 				11C1C1D124202C0300ACB9B8 /* NetworkingService.swift */,
+				115E363B243D271F000E3855 /* NetworkRouter.swift */,
 				11C1C1D224202C0300ACB9B8 /* ItemsNetworkingService.swift */,
+				115E363D243D2751000E3855 /* ItemsRouter.swift */,
 				11C1C1D324202C0300ACB9B8 /* NetworkError.swift */,
 			);
 			path = NetworkingService;
@@ -378,6 +389,8 @@
 				11C1C1F224202CE700ACB9B8 /* ItemsViewModel.swift in Sources */,
 				11C1C1DA24202C0300ACB9B8 /* ItemsNetworkingService.swift in Sources */,
 				11C1C1D624202C0300ACB9B8 /* ItemsParser.swift in Sources */,
+				115E363C243D271F000E3855 /* NetworkRouter.swift in Sources */,
+				115E363E243D2751000E3855 /* ItemsRouter.swift in Sources */,
 				11C1C1CC24202BDB00ACB9B8 /* Item.swift in Sources */,
 				11C1C1D824202C0300ACB9B8 /* NetworkingService.swift in Sources */,
 				11C1C19C24202A5E00ACB9B8 /* AppDelegate.swift in Sources */,
@@ -396,6 +409,7 @@
 				11C1C1DB24202C0300ACB9B8 /* ItemsNetworkingService.swift in Sources */,
 				11C1C1DD24202C0300ACB9B8 /* NetworkError.swift in Sources */,
 				11C1C1F124202CE700ACB9B8 /* ItemsHandler.swift in Sources */,
+				115E3642243D2E72000E3855 /* NetworkRouterMocks.swift in Sources */,
 				11C1C1FD24202DAA00ACB9B8 /* ItemsHandlerTests.swift in Sources */,
 				11C1C1D924202C0300ACB9B8 /* NetworkingService.swift in Sources */,
 				11C1C1CD24202BDB00ACB9B8 /* Item.swift in Sources */,
@@ -403,7 +417,9 @@
 				11C1C1D524202C0300ACB9B8 /* ParserError.swift in Sources */,
 				11C1C1D724202C0300ACB9B8 /* ItemsParser.swift in Sources */,
 				11C1C1F324202CE700ACB9B8 /* ItemsViewModel.swift in Sources */,
+				115E3640243D2861000E3855 /* NetworkRouter.swift in Sources */,
 				11C1C1FF24202DAA00ACB9B8 /* ItemsNetworkingServiceTest.swift in Sources */,
+				115E363F243D2858000E3855 /* ItemsRouter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

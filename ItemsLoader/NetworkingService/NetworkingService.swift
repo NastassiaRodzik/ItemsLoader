@@ -7,15 +7,36 @@
 //
 
 import Foundation
-
-enum HTTPMethod: String {
-    case get = "GET"
-    case post = "POST"
-    case put = "PUT"
-    case delete = "DELETE"
-}
+import Combine
 
 protocol NetworkingService {
-    init(urlString: String, httpMethod: HTTPMethod, headers: [String: String], session: URLSession)
-    func loadData(completion: @escaping (Data?, Error?) -> Void)
+    var router: NetworkRouter { get }
+    var session: URLSession { get }
+    
+    func loadDataWithCombine<T: Decodable>() throws -> AnyPublisher<T, Error>
+}
+
+extension NetworkingService {
+    func loadDataWithCombine<T: Decodable>() throws -> AnyPublisher<T, Error> {
+        do {
+            let request = try router.asURLRequest() // process
+            let cancellable = session.dataTaskPublisher(for: request)
+                .tryMap { (data, response) -> Data in
+                    guard let response = response as? HTTPURLResponse,
+                        200...299 ~= response.statusCode else {
+                            if let badStatusCodeError = try? JSONDecoder().decode(BadStatusCodeError.self, from: data) {
+                                throw badStatusCodeError
+                            }
+                            throw NetworkError.invalidResponse
+                    }
+                    return data
+                }
+                .decode(type: T.self, decoder: JSONDecoder())
+                .eraseToAnyPublisher()
+            return cancellable
+        } catch {
+            throw error
+        }
+        
+    }
 }

@@ -27,7 +27,10 @@ class ItemsURLProtocolMock: URLProtocol {
         let requiredHeaderValue = "$2b$10$Vr2RAD3mpzFZ6o8bPZNlgOOM0LmFLvN24IoxlELo3arTgNszX7otS"
         if let secretHeaderValue = request.value(forHTTPHeaderField: requiredHeader),
             secretHeaderValue == requiredHeaderValue {
-            client?.urlProtocol(self, didLoad: Data())
+            let bundle = Bundle(for: type(of: self))
+            let itemsURL = bundle.url(forResource: "Items", withExtension: "json")!
+            let jsonData = try! Data(contentsOf: itemsURL)
+            client?.urlProtocol(self, didLoad: jsonData)
             let response = HTTPURLResponse(url: url,
                                            statusCode: 200,
                                            httpVersion: nil,

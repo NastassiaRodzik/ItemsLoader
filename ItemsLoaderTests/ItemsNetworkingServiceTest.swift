@@ -7,10 +7,12 @@
 //
 
 import XCTest
+import Combine
 
 class ItemsNetworkingServiceTest: XCTestCase {
     
     private var session: URLSession!
+    private var cancellable: Cancellable?
     
     override func setUp() {
         super.setUp()
@@ -22,72 +24,70 @@ class ItemsNetworkingServiceTest: XCTestCase {
     
     override func tearDown() {
         session = nil
+        cancellable?.cancel()
         super.tearDown()
     }
 
     func testDataLoading() {
-       let networkingService: NetworkingService = ItemsNetworkingService(urlString: "https://www.google.com",
-                                                                          httpMethod: .get,
-                                                                          headers: ["secret-key": "$2b$10$Vr2RAD3mpzFZ6o8bPZNlgOOM0LmFLvN24IoxlELo3arTgNszX7otS"],
-                                                                          session: session)
+        let router = ItemsRouter()
+        let networkingService = ItemsNetworkingService(router: router, session: session)
         
         let promise = expectation(description: "Loading items data")
-        networkingService.loadData { (data, error) in
-            if data != nil {
-                promise.fulfill()
-            } else {
+        cancellable = try? networkingService.loadItems().sink(receiveCompletion: { failure in
+            switch failure {
+            case .failure(let error):
                 XCTFail("Items data is expected but \(String(describing: error)) was catched")
+            case .finished:
+                break
             }
+            
+        }) { items in
+           promise.fulfill()
         }
         wait(for: [promise], timeout: 1)
         
     }
     
     func testBadStatusCodeError() {
-        let networkingService: NetworkingService = ItemsNetworkingService(urlString: "https://www.google.com",
-                                                                          httpMethod: .get,
-                                                                          headers: [:],
-                                                                          session: session)
+        let networkingService = ItemsNetworkingService(router: BadStatusCodeRouter(), session: session)
         
         let promise = expectation(description: "Loading items data")
-        networkingService.loadData { (data, error) in
-            guard let error = error else {
-                XCTFail("No data can be received without required header")
-                return
+        cancellable = try? networkingService.loadItems().sink(receiveCompletion: { failure in
+            switch failure {
+                case .failure(let error):
+                    if error is BadStatusCodeError {
+                        promise.fulfill()
+                    }
+                case .finished:
+                    XCTFail()
             }
-            if error is BadStatusCodeError {
-                promise.fulfill()
-            }
-        }
+        }, receiveValue: { _ in
+            XCTFail("No data can be received without required header")
+        })
         wait(for: [promise], timeout: 1)
         
     }
     
     func testInvalidURL() {
-        let networkingService: NetworkingService = ItemsNetworkingService(urlString: "$%#___+?",
-                                                                          httpMethod: .get,
-                                                                          headers: ["secret-key": "$2b$10$Vr2RAD3mpzFZ6o8bPZNlgOOM0LmFLvN24IoxlELo3arTgNszX7otS"],
-                                                                          session: session)
+        let networkingService = ItemsNetworkingService(router: InvalidURLRouter(), session: session)
         
         let promise = expectation(description: "Loading items data")
-        networkingService.loadData { (data, error) in
-            guard data == nil else {
+        do {
+            cancellable = try networkingService.loadItems().sink(receiveCompletion: { failure in
+                switch failure {
+                    case .failure(_):
+                        XCTFail("Invalid URL error is expected")
+                    case .finished:
+                        break
+                }
+            }, receiveValue: { _ in
                 XCTFail("No data can be received from invalid url")
-                return
-            }
-            guard let error = error as? NetworkError else {
-                XCTFail("Invalid URL error is expected")
-                return
-            }
-            switch error {
-            case .invalidResponse, .noDataAvailable:
-                XCTFail("Invalid URL error is expected")
-            case .invalidURL:
-                promise.fulfill()
-            }
+            })
+        } catch {
+            promise.fulfill()
         }
-        wait(for: [promise], timeout: 1)
         
+        wait(for: [promise], timeout: 1)
     }
 
 }
