@@ -45,7 +45,9 @@ final class ItemsViewController: UIViewController {
         activityIndicator.startAnimating()
 
         itemsViewModel.prepareItems()
-        itemsCancellable = itemsViewModel.itemsSubject.sink(receiveCompletion: { [weak self] failure in
+        itemsCancellable = itemsViewModel.itemsSubject
+            .dropFirst()
+            .sink(receiveCompletion: { [weak self] failure in
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
                 self.activityIndicator.stopAnimating()
