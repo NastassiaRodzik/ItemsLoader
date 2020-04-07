@@ -7,67 +7,60 @@
 //
 
 import Foundation
+import Combine
 
 protocol ItemsViewModelDataSource {
+    init(networkingService: NetworkingService, itemsParser: ItemsJSONParser, itemsHandler: ItemsHandlerProtocol)
     
-    var networkingService: NetworkingService { get }
-    var itemsParser: ItemsJSONParser { get }
-    var itemsHandler: ItemsHandlerProtocol { get }
-    
-    var lists: [ItemsGroupedList]? { get }
-    var isItemsListsAvailable: Bool { get }
-    func prepareItems(completion: @escaping (String?) -> Void)
+    var itemsSubject: CurrentValueSubject<[ItemsGroupedList], Error> { get }
+    func prepareItems()
 }
 
 final class ItemsViewModel: ItemsViewModelDataSource {
+
+    let itemsSubject: CurrentValueSubject<[ItemsGroupedList], Error> = CurrentValueSubject([])
     
-    let networkingService: NetworkingService
-    let itemsParser: ItemsJSONParser
-    let itemsHandler: ItemsHandlerProtocol
+    private let networkingService: NetworkingService
+    private let itemsParser: ItemsJSONParser
+    private let itemsHandler: ItemsHandlerProtocol
     
-    var lists: [ItemsGroupedList]?
-    var isItemsListsAvailable: Bool {
-        guard let lists = lists else {
-            return false
-        }
-        return !lists.isEmpty
+    private var lists: [ItemsGroupedList]?
+
+    init(networkingService: NetworkingService, itemsParser: ItemsJSONParser, itemsHandler: ItemsHandlerProtocol){
+        self.networkingService = networkingService
+        self.itemsParser = itemsParser
+        self.itemsHandler = itemsHandler
     }
     
-    init() {
-        networkingService = ItemsNetworkingService()
-        itemsParser = ItemsJSONParser()
-        itemsHandler = ItemsHandler()
+    convenience init() {
+        self.init(networkingService: ItemsNetworkingService(), itemsParser: ItemsJSONParser(), itemsHandler: ItemsHandler())
     }
     
-    func prepareItems(completion: @escaping (String?) -> Void) {
-        
+    func prepareItems() {
         networkingService.loadData { [weak self] (data, error) in
             guard let self = self else {
                 return
             }
             guard error == nil else {
-                if let localizedError = error as? LocalizedError {
-                    completion(localizedError.errorDescription)
-                } else {
-                    completion(error?.localizedDescription)
-                }
+                self.itemsSubject.send(completion: Subscribers.Completion<Error>.failure(error!))
                 return
             }
             guard let data = data else {
-                completion(NetworkError.noDataAvailable.errorDescription)
+                self.itemsSubject.send(completion: Subscribers.Completion<Error>.failure(NetworkError.noDataAvailable))
                 return
             }
             guard var items = self.itemsParser.parseItems(from: data) else {
-                completion(ParserError.cannotDecodeData.errorDescription)
+                self.itemsSubject.send(completion: Subscribers.Completion<Error>.failure(ParserError.cannotDecodeData))
                 return
             }
             
             let lists = self.itemsHandler.handle(&items)
             self.lists = lists
-            completion(nil)
-        
+            
+            self.itemsSubject.send(lists)
+            self.itemsSubject.send(completion: Subscribers.Completion<Error>.finished)
+           
         }
-        
     }
     
 }

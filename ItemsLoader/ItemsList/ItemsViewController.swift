@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Combine
 
 final class ItemsViewController: UIViewController {
 
@@ -15,6 +16,15 @@ final class ItemsViewController: UIViewController {
     @IBOutlet weak private var activityIndicator: UIActivityIndicatorView!
     
     private let itemsViewModel = ItemsViewModel()
+    private var itemsCancellable: Cancellable!
+    private var items: [ItemsGroupedList] = [] {
+        didSet {
+            let isItemsListsAvailable = !items.isEmpty
+            self.noItemsAvailableView.isHidden = isItemsListsAvailable
+            self.itemsTableView.isHidden = !isItemsListsAvailable
+            self.itemsTableView.reloadData()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,24 +43,37 @@ final class ItemsViewController: UIViewController {
     
     private func loadTableData() {
         activityIndicator.startAnimating()
-        itemsViewModel.prepareItems { [weak self] errorDescription in
+
+        itemsViewModel.prepareItems()
+        itemsCancellable = itemsViewModel.itemsSubject.sink(receiveCompletion: { [weak self] failure in
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
-                
                 self.activityIndicator.stopAnimating()
-                guard errorDescription == nil else {
-                    self.showErrorAlert(with: errorDescription)
-                    return
+                switch failure {
+                case .failure(let error):
+                    self.showErrorAlert(with: error)
+                case .finished:
+                    self.itemsCancellable.cancel()
                 }
-                
-                self.noItemsAvailableView.isHidden = self.itemsViewModel.isItemsListsAvailable
-                self.itemsTableView.isHidden = !self.itemsViewModel.isItemsListsAvailable
-                self.itemsTableView.reloadData()
+            }
+            
+        }) { [weak self] list in
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                self.activityIndicator.stopAnimating()
+                self.items = list
             }
         }
+        
     }
     
-    private func showErrorAlert(with errorDescription: String?) {
+    private func showErrorAlert(with error: Error) {
+        let errorDescription: String?
+        if let localizedError = error as? LocalizedError {
+            errorDescription = localizedError.errorDescription
+        } else {
+            errorDescription = error.localizedDescription
+        }
         let alert = UIAlertController(title: NSLocalizedString("Sorry, we cannot display data", comment: ""),
                                       message: errorDescription,
                                       preferredStyle: .alert)
@@ -71,30 +94,23 @@ final class ItemsViewController: UIViewController {
 extension ItemsViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return itemsViewModel.lists?.count ?? 0
+        return items.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let lists = itemsViewModel.lists else {
-            return 0
-        }
-        return lists[section].items.count
+        return items[section].items.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ItemTableViewCell.reuseIdentifier) as! ItemTableViewCell
-        if let list = itemsViewModel.lists?[indexPath.section] {
-            let item = list.items[indexPath.row]
-            cell.configure(with: item)
-        }
+        let list = items[indexPath.section]
+        let item = list.items[indexPath.row]
+        cell.configure(with: item)
         return cell
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        guard let lists = itemsViewModel.lists else {
-            return nil
-        }
-        let listIdentifier = lists[section].listId
+        let listIdentifier = items[section].listId
         return String(format: NSLocalizedString("List Identifier: %@", comment: ""), "\(listIdentifier)")
     }
     
