@@ -19,7 +19,7 @@ protocol NetworkingService {
 extension NetworkingService {
     func loadDataWithCombine<T: Decodable>() throws -> AnyPublisher<T, Error> {
         do {
-            let request = try router.asURLRequest() // process
+            let request = try router.asURLRequest()
             let cancellable = session.dataTaskPublisher(for: request)
                 .tryMap { (data, response) -> Data in
                     guard let response = response as? HTTPURLResponse,

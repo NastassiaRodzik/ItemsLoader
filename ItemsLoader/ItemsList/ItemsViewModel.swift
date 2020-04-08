@@ -10,8 +10,6 @@ import Foundation
 import Combine
 
 protocol ItemsViewModelDataSource {
-    init(networkingService: ItemsNetworkingClient, itemsHandler: ItemsHandlerProtocol)
-    
     var itemsSubject: CurrentValueSubject<[ItemsGroupedList], Error> { get }
     func prepareItems()
 }
